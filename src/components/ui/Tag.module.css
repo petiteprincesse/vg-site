@@ -1,0 +1,19 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 39px;
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-inverse);
+  color: var(--color-fg-inverse);
+  font: 600 0.875rem / 1.4 var(--font-text);
+  text-transform: uppercase;
+}
+
+@media (min-width: 1280px) {
+  .tag {
+    min-height: 40px;
+    padding: var(--space-8) var(--space-16);
+    border-radius: var(--radius-md);
+  }
+}

@@ -1,0 +1,15 @@
+.frame.frame {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.curtain,
+.zoom {
+  position: absolute;
+  inset: 0;
+}
+
+.curtain {
+  background: var(--color-grey-1);
+}

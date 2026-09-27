@@ -1,0 +1,44 @@
+.button {
+  position: fixed;
+  inset-inline-end: var(--page-inline);
+  inset-block-end: clamp(1rem, 2.5vw, 2rem);
+  z-index: var(--z-header);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  border-radius: 50%;
+  background: rgb(35 33 36 / 0.5);
+  color: var(--color-fg-inverse);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  translate: 0 calc(var(--lift, 0px) * -1);
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    background-color var(--dur) var(--ease),
+    visibility 0s linear var(--dur);
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.button:hover {
+  background: rgb(35 33 36 / 0.75);
+}
+
+.button svg {
+  transition: transform var(--dur) var(--ease);
+}
+
+.button:hover svg {
+  transform: translateY(-2px);
+}

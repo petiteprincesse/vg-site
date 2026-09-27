@@ -1,0 +1,32 @@
+.heading {
+  align-items: start;
+  margin-block-end: var(--space-heading);
+}
+
+.eyebrow {
+  font: var(--type-eyebrow);
+  font-variation-settings: 'wdth' 100;
+  color: var(--on-surface-faint);
+  text-transform: uppercase;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.title {
+  font: var(--type-h2);
+  font-variation-settings: 'wdth' 100;
+  color: var(--on-surface);
+  text-wrap: balance;
+}
+
+@media (max-width: 1279px) {
+  .heading.heading {
+    row-gap: 0;
+  }
+
+  .eyebrow {
+    margin-block-end: var(--space-8);
+  }
+}

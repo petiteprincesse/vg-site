@@ -1,0 +1,93 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.photo {
+  position: relative;
+  overflow: hidden;
+  height: clamp(20.25rem, 246.33px + 20.712vw, 40.25rem);
+  background: var(--color-grey-1);
+}
+
+.photoParallax,
+.photoZoom {
+  position: absolute;
+  inset: 0;
+}
+
+.photoZoom {
+  transform-origin: 50% 40%;
+}
+
+.photoImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.photoShade {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-inverse);
+  pointer-events: none;
+}
+
+.panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(1.5rem, 22.058px + 0.5178vw, 2rem) var(--section-block);
+  background: var(--color-bg-inverse);
+  color: var(--color-fg-inverse);
+}
+
+.gradient {
+  z-index: -1;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.panelInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.lede {
+  align-items: start;
+  row-gap: var(--space-16);
+}
+
+.title {
+  font: var(--type-h1);
+  font-variation-settings: 'wdth' 100;
+  text-transform: uppercase;
+}
+
+.titleLine {
+  display: block;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.625rem, 7.573px + 0.6472vw, 1.25rem);
+  font: var(--type-body-lg);
+}
+
+.copy p {
+  white-space: pre-line;
+}
+
+@media (max-width: 1279px) {
+  .copy {
+    line-height: 1.4;
+  }
+}
+
+@media (min-width: 1280px) {
+  .panelInner {
+    gap: var(--space-20);
+  }
+}
