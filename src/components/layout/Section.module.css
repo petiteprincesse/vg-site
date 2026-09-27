@@ -1,0 +1,12 @@
+.section {
+  padding-block: var(--section-block);
+  background: var(--surface);
+  color: var(--on-surface);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-inline);
+}

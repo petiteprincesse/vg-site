@@ -1,0 +1,24 @@
+.list {
+  --accordion-columns: minmax(0, 445fr) minmax(0, 870fr);
+}
+
+.answer {
+  max-width: 425px;
+  padding-block-start: var(--space-8);
+  font: var(--type-micro);
+  color: var(--on-surface-muted);
+}
+
+@media (min-width: 1280px) {
+  .title {
+    line-height: 1.1;
+  }
+
+  .list {
+    margin-block-end: var(--space-block);
+  }
+
+  .answer {
+    padding-block-start: var(--space-16);
+  }
+}

@@ -1,0 +1,8 @@
+.bracket {
+  height: 100%;
+  color: var(--color-separator);
+}
+
+.start {
+  transform: rotate(180deg);
+}

@@ -1,0 +1,49 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-h);
+  padding: var(--space-8) var(--space-16);
+  border: 1px solid var(--on-surface);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--on-surface);
+  font: var(--type-button);
+  font-variation-settings: 'wdth' 100;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+
+.chip:hover:not(.active) {
+  background: color-mix(in srgb, var(--on-surface) 8%, transparent);
+}
+
+.active {
+  background: var(--accent-surface);
+  border-color: var(--accent-surface);
+  color: var(--on-accent);
+}
+
+.chip {
+  position: relative;
+  isolation: isolate;
+}
+
+.label {
+  position: relative;
+}
+
+.withPill.active {
+  background: transparent;
+}
+
+.pill {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--accent-surface);
+}

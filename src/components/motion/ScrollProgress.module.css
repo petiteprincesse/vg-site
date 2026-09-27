@@ -1,0 +1,9 @@
+.bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: calc(var(--z-header) + 1);
+  height: 3px;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #0a8fe6, #1313a8 55%, #0a8fe6);
+  pointer-events: none;
+}

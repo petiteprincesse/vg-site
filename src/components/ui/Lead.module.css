@@ -1,0 +1,22 @@
+.lead {
+  font: var(--type-lead);
+  text-indent: 33.6%;
+}
+
+.strong {
+  color: var(--on-surface);
+}
+
+.muted {
+  color: var(--on-surface-muted);
+}
+
+.faint {
+  color: var(--on-surface-faint);
+}
+
+@media (max-width: 1279px) {
+  .lead {
+    text-indent: 0;
+  }
+}
