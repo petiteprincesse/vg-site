@@ -11,6 +11,7 @@ export type NewsItem = {
     readonly height: number;
     readonly alt: string;
     readonly side: 'start' | 'end';
+    readonly position?: string;
   };
   readonly wide?: boolean;
 };
@@ -21,6 +22,39 @@ export const newsSection = {
 } as const;
 
 export const news: readonly NewsItem[] = [
+  {
+    id: 'investment-leaders-2026',
+    tag: 'Анонс',
+    title: 'Игры на Investment Leaders Forum',
+    date: '2026-11-14',
+    excerpt:
+      '14 ноября — Венчурные игры в треке «Новый русский венчур». Приглашаем стартапы с первой выручкой и старше.',
+    href: '#upcoming',
+    image: {
+      src: '/img/upcoming/investment-leaders-forum-2026.jpg',
+      width: 1080,
+      height: 1080,
+      alt: 'Investment Leaders Forum 2026, 14 ноября, Москва',
+      side: 'end',
+      position: 'center top',
+    },
+  },
+  {
+    id: 'ledentsov-2026',
+    tag: 'Мероприятия',
+    title: '18-е Венчурные игры на Премии Леденцова',
+    date: '2026-09-28',
+    excerpt:
+      '18-е Венчурные игры от Daily Challenge прошли на Премии Христофора Леденцова: стартапы вышли на сцену перед экспертным жюри.',
+    href: '#event-14',
+    image: {
+      src: '/img/events/14/1.jpg',
+      width: 2400,
+      height: 1399,
+      alt: 'Участники и эксперты 18-х Венчурных игр на Премии Христофора Леденцова',
+      side: 'start',
+    },
+  },
   {
     id: 'time-of-digital-2026',
     tag: 'Мероприятия',
@@ -34,7 +68,7 @@ export const news: readonly NewsItem[] = [
       width: 2400,
       height: 1800,
       alt: 'Питч стартапа на форуме «Время Цифры»',
-      side: 'end',
+      side: 'start',
     },
   },
   {
@@ -45,13 +79,7 @@ export const news: readonly NewsItem[] = [
     excerpt:
       'Daily Challenge провели Венчурные игры на Российском Венчурном Форуме — на большой сцене и в формате баттла.',
     href: '#event-12',
-    image: {
-      src: '/img/events/12/1.jpg',
-      width: 2400,
-      height: 1800,
-      alt: 'Раунд «Питч без презентации» на Российском Венчурном Форуме',
-      side: 'start',
-    },
+    wide: true,
   },
   {
     id: 'league-plekhanov-2026',
@@ -66,7 +94,7 @@ export const news: readonly NewsItem[] = [
       width: 2207,
       height: 2400,
       alt: 'Зал РЭУ им. Г. В. Плеханова во время «Лиги ВУЗов»',
-      side: 'start',
+      side: 'end',
     },
   },
   {
@@ -77,6 +105,12 @@ export const news: readonly NewsItem[] = [
     excerpt:
       '14-е Венчурные игры Daily Challenge собрали стартапы, экспертов и инвесторов в Научном парке МГУ.',
     href: '#event-10',
-    wide: true,
+    image: {
+      src: '/img/events/10/1.jpg',
+      width: 2400,
+      height: 1800,
+      alt: 'Участники и эксперты Венчурных игр в Научном парке МГУ',
+      side: 'start',
+    },
   },
 ];

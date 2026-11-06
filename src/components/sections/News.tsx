@@ -47,6 +47,7 @@ export function News() {
                   fill
                   sizes="(max-width: 1279px) 100vw, 23vw"
                   className={styles.photoImage}
+                  style={item.image.position ? { objectPosition: item.image.position } : undefined}
                 />
               </ImageReveal>
             ) : null}
