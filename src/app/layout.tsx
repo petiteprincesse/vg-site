@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { inter, tektur } from '@/lib/fonts';
 import { site } from '@/content/site';
 import { faq } from '@/content/faq';
+import { isUpcoming, upcomingGame } from '@/content/upcoming';
 import { MotionProvider } from '@/components/motion/MotionProvider';
 import { ScrollProgress } from '@/components/motion/ScrollProgress';
 import { BackToTop } from '@/components/ui/BackToTop';
@@ -89,6 +90,27 @@ const jsonLd = {
         acceptedAnswer: { '@type': 'Answer', text: item.answer },
       })),
     },
+    ...(isUpcoming(upcomingGame)
+      ? [
+          {
+            '@type': 'Event',
+            '@id': `${site.url}/#${upcomingGame.id}`,
+            name: `${site.name} на ${upcomingGame.title}`,
+            description: upcomingGame.paragraphs[1],
+            startDate: upcomingGame.startDate,
+            eventStatus: 'https://schema.org/EventScheduled',
+            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            image: `${site.url}${upcomingGame.poster.src}`,
+            url: `${site.url}/#${upcomingGame.id}`,
+            location: {
+              '@type': 'Place',
+              name: 'Центр международной торговли',
+              address: upcomingGame.address,
+            },
+            organizer: { '@type': 'Organization', name: site.organizer.name, url: site.organizer.url },
+          },
+        ]
+      : []),
   ],
 };
 

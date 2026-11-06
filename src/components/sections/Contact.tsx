@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { audienceTabs, contactSection, fieldsByAudience } from '@/content/contact';
 import type { LeadAudience, LeadErrors, LeadPayload, LeadResponse } from '@/lib/lead';
 import { captureAttribution, readAttribution } from '@/lib/attribution';
+import { APPLY_ANCHOR } from '@/content/upcoming';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { TextArea, TextField } from '@/components/ui/Field';
@@ -28,18 +29,36 @@ const EMPTY: LeadPayload = {
   request: '',
 };
 
-export function Contact() {
+export function Contact({ upcomingLabel }: { upcomingLabel?: string }) {
   const [values, setValues] = useState<LeadPayload>(EMPTY);
   const [errors, setErrors] = useState<LeadErrors>({});
   const [status, setStatus] = useState<Status>('idle');
   const [failure, setFailure] = useState<string>(contactSection.failure);
   const [website, setWebsite] = useState('');
+  const [forUpcomingGame, setForUpcomingGame] = useState(false);
   const startedAt = useRef(0);
 
   useEffect(() => {
     startedAt.current = Date.now();
     captureAttribution();
   }, []);
+
+  useEffect(() => {
+    if (!upcomingLabel) return;
+
+    const applyForGame = () => {
+      setForUpcomingGame(true);
+      setValues((current) => ({ ...current, audience: 'founder' }));
+    };
+    const onClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest?.(`a[href="#${APPLY_ANCHOR}"]`);
+      if (link) applyForGame();
+    };
+
+    if (window.location.hash === `#${APPLY_ANCHOR}`) applyForGame();
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [upcomingLabel]);
 
   const fields = useMemo(() => fieldsByAudience[values.audience], [values.audience]);
   const shortFields = fields.filter((field) => !field.multiline);
@@ -78,6 +97,7 @@ export function Contact() {
           meta: readAttribution(),
           website,
           startedAt: startedAt.current,
+          forUpcomingGame: Boolean(upcomingLabel) && forUpcomingGame,
         }),
       });
 
@@ -86,6 +106,7 @@ export function Contact() {
       if (response.ok && body?.ok) {
         setStatus('success');
         setValues({ ...EMPTY, audience: values.audience });
+        setForUpcomingGame(false);
         startedAt.current = Date.now();
         return;
       }
@@ -120,7 +141,7 @@ export function Contact() {
 
       <div className={grid.grid}>
         <Reveal className={grid.colRightHalf} y={32}>
-          <form className={styles.form} onSubmit={onSubmit} onFocus={() => void loadValidator()} noValidate>
+          <form id={APPLY_ANCHOR} className={styles.form} onSubmit={onSubmit} onFocus={() => void loadValidator()} noValidate>
             <div className={styles.trap} aria-hidden>
               <label>
                 Не заполняйте это поле
@@ -176,6 +197,18 @@ export function Contact() {
                 />
               ))}
             </div>
+
+            {upcomingLabel ? (
+              <label className={styles.game}>
+                <input
+                  type="checkbox"
+                  className={styles.gameInput}
+                  checked={forUpcomingGame}
+                  onChange={(event) => setForUpcomingGame(event.target.checked)}
+                />
+                <span>Хочу участвовать в ближайшей игре: {upcomingLabel}</span>
+              </label>
+            ) : null}
 
             <Button type="submit" block disabled={status === 'submitting'}>
               {status === 'submitting' ? 'Отправляем…' : contactSection.submit}

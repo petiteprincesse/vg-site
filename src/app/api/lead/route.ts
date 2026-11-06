@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { site } from '@/content/site';
+import { isUpcoming, upcomingGame } from '@/content/upcoming';
 import { leadRequestSchema, toLeadErrors, type LeadResponse } from '@/lib/lead';
 import { clientIp, rateLimit } from '@/lib/rateLimit';
 import { formatLeadMessage, getTelegramConfig, sendTelegramMessage } from '@/lib/telegram';
@@ -50,7 +51,7 @@ export async function POST(request: Request): Promise<NextResponse> {
   const parsed = leadRequestSchema.safeParse(body);
   if (!parsed.success) return reply({ ok: false, code: 'invalid', errors: toLeadErrors(parsed.error) }, 422);
 
-  const { meta, website, startedAt, ...lead } = parsed.data;
+  const { meta, website, startedAt, forUpcomingGame, ...lead } = parsed.data;
 
   const tooFast = startedAt !== undefined && Date.now() - startedAt < MIN_FILL_MS;
   if (website || tooFast) {
@@ -64,7 +65,8 @@ export async function POST(request: Request): Promise<NextResponse> {
     return reply({ ok: false, code: 'unavailable' }, 503);
   }
 
-  const result = await sendTelegramMessage(config, formatLeadMessage(lead, meta));
+  const game = forUpcomingGame && isUpcoming(upcomingGame) ? upcomingGame : undefined;
+  const result = await sendTelegramMessage(config, formatLeadMessage(lead, meta, game));
   if (!result.ok) {
     console.error(`[lead] Telegram delivery failed: ${result.reason}`);
     return reply({ ok: false, code: 'delivery_failed' }, 502);

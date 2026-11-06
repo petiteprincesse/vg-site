@@ -31,6 +31,23 @@
   gap: var(--space-16);
 }
 
+.game {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+  font: var(--type-body);
+  cursor: pointer;
+}
+
+.gameInput {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--on-surface);
+  cursor: pointer;
+}
+
 .trap {
   position: absolute;
   inset-inline-start: -10000px;

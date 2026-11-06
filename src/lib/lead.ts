@@ -56,6 +56,7 @@ export type LeadMeta = z.infer<typeof leadMetaSchema>;
 
 export const leadRequestSchema = leadSchema.extend({
   meta: leadMetaSchema.optional(),
+  forUpcomingGame: z.boolean().optional(),
   website: z.string().max(LEAD_LIMITS.short).optional(),
   startedAt: z.number().int().nonnegative().optional(),
 });

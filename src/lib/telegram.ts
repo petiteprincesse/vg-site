@@ -1,6 +1,7 @@
 import 'server-only';
 import { fieldsByAudience } from '@/content/contact';
 import type { LeadAudience, LeadMeta, LeadPayload } from '@/lib/lead';
+import type { UpcomingGame } from '@/content/upcoming';
 
 const API = 'https://api.telegram.org';
 const MESSAGE_LIMIT = 4096;
@@ -44,14 +45,21 @@ const moscowTime = new Intl.DateTimeFormat('ru-RU', {
   minute: '2-digit',
 });
 
-function render(lead: LeadPayload, meta: LeadMeta | undefined, receivedAt: Date, longMax: number): string {
+function render(
+  lead: LeadPayload,
+  meta: LeadMeta | undefined,
+  game: UpcomingGame | undefined,
+  receivedAt: Date,
+  longMax: number,
+): string {
   const audience = AUDIENCE[lead.audience];
   const lines: string[] = [
-    `${SOURCE_TAG} #lead ${audience.tag}`,
+    [SOURCE_TAG, '#lead', audience.tag, game?.tag].filter(Boolean).join(' '),
     '<b>Новая заявка</b>',
     `<b>Кто:</b> ${audience.label}`,
-    '',
   ];
+  if (game) lines.push(`<b>Игра:</b> ${escapeHtml(game.formLabel)}`);
+  lines.push('');
 
   for (const field of fieldsByAudience[lead.audience]) {
     const value = lead[field.name];
@@ -73,12 +81,17 @@ function render(lead: LeadPayload, meta: LeadMeta | undefined, receivedAt: Date,
   return lines.join('\n');
 }
 
-export function formatLeadMessage(lead: LeadPayload, meta: LeadMeta | undefined, receivedAt = new Date()): string {
+export function formatLeadMessage(
+  lead: LeadPayload,
+  meta: LeadMeta | undefined,
+  game?: UpcomingGame,
+  receivedAt = new Date(),
+): string {
   for (let longMax = 1600; longMax >= 200; longMax -= 200) {
-    const text = render(lead, meta, receivedAt, longMax);
+    const text = render(lead, meta, game, receivedAt, longMax);
     if (text.length <= MESSAGE_LIMIT) return text;
   }
-  return render(lead, meta, receivedAt, 100);
+  return render(lead, meta, game, receivedAt, 100);
 }
 
 type TelegramResult = { ok: true } | { ok: false; reason: string };
